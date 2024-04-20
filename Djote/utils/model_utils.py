@@ -14,3 +14,13 @@ class SoftDeleteMixin(models.Model):
     def restore(self):
         self.is_deleted = False
         self.save()
+
+
+class TimeStampMixin(models.Model):
+    """Abstract model that handles created_at and updated_at fields."""
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
