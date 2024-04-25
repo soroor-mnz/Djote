@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-
 from user.models import AuthUser
 
 
@@ -18,9 +17,7 @@ class UserWriteSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField(required=True)
     is_staff = serializers.BooleanField(default=True)
     is_active = serializers.BooleanField(default=True)
-    email = serializers.EmailField(
-        validators=[UniqueValidator(queryset=AuthUser.objects.all())], required=True, allow_blank=False
-    )
+    email = serializers.EmailField( required=True, allow_blank=False)
 
     class Meta:
         model = AuthUser
@@ -36,3 +33,9 @@ class UserWriteSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return UserReadSerializer().to_representation(instance)
+
+    def create(self, validated_data):
+        user = super(UserWriteSerializer, self).create(validated_data)
+        user.set_password(validated_data["password"])
+        user.save()
+        return user

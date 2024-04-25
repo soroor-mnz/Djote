@@ -14,7 +14,6 @@ from user.models import AuthUser
 class UserViewSet(viewsets.ModelViewSet, ReadWriteSerializerViewMixin):
     read_serializer = UserReadSerializer
     write_serializer = UserWriteSerializer
-    permission_classes = [IsAuthenticated]
     pagination_class = StandardResultsSetPagination
     filterset_class = UserFilterSet
     filter_backends = (SearchFilter, DjangoFilterBackend)
