@@ -16,6 +16,7 @@ class UserViewSet(viewsets.ModelViewSet, ReadWriteSerializerViewMixin):
     write_serializer = UserWriteSerializer
     pagination_class = StandardResultsSetPagination
     filterset_class = UserFilterSet
+    permission_classes = [IsAuthenticated]
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ["username"]
 
