@@ -1,9 +1,4 @@
-
+/local_settings.py
 .idea
-*.log
-*.pot
-*.pyc
-__pycache__/
-db.sqlite3
-local_settings.py
 venv
+db.sqlite3
