@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='authuser',
             name='created_at',
-            field=models.DateTimeField(auto_now_add=True, default='none'),
+            field=models.DateTimeField(auto_now_add=True, default='2020-02-02'),
             preserve_default=False,
         ),
         migrations.AddField(
