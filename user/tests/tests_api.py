@@ -107,4 +107,3 @@ class ModelsTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["first_name"], data["fist_name"])
         self.assertIsNotNone(AuthUser.objects.filter(first_name=data["first_name"]).exists())
-        print(response.data)
