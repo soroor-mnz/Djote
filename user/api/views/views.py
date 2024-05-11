@@ -5,7 +5,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from Djote.utils.view_utils import ReadWriteSerializerViewMixin, StandardResultsSetPagination
+from Djote.utils.view_utils import ReadWriteSerializerViewMixin, StandardResultsSetPagination, IsOTPVerified
 from user.api.serializers.serializers import UserReadSerializer, UserWriteSerializer
 from user.filtersets import UserFilterSet
 from user.models import AuthUser
@@ -16,7 +16,7 @@ class UserViewSet(viewsets.ModelViewSet, ReadWriteSerializerViewMixin):
     write_serializer = UserWriteSerializer
     pagination_class = StandardResultsSetPagination
     filterset_class = UserFilterSet
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsOTPVerified]
     filter_backends = (SearchFilter, DjangoFilterBackend)
     search_fields = ["username"]
 

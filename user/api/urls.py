@@ -1,6 +1,6 @@
 from django.urls import path
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+from user.api.views.auth_views import CustomTokenObtainPairView, OTPVerificationView, CustomLogoutView
 from user.api.views.views import UserViewSet
 
 urlpatterns = [
@@ -8,6 +8,7 @@ urlpatterns = [
     path('users/<str:username>/', UserViewSet.as_view({'get': "retrieve", "patch": "partial_update", "delete": "destroy"}),
          name='user-detail'),
     # token api
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('token/', CustomTokenObtainPairView.as_view(), name='custom_token_obtain_pair'),
+    path('otp/verify/', OTPVerificationView.as_view(), name='otp_verify'),
+    path('logout/', CustomLogoutView.as_view(), name='custom_logout'),
 ]
