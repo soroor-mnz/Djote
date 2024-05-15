@@ -1,4 +1,24 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+
+# Django
+*.log
+*.pot
+local_settings.py
+db.sqlite3
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
 /local_settings.py
 .idea
 venv
-db.sqlite3
