@@ -71,7 +71,7 @@ class ModelsTestCase(TestCase):
     def test_retrieve_api(self):
         response = self.client.get(reverse('user-detail', kwargs={"username": self.user_1.username}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data.get("results")["first_name"],
+        self.assertEqual(response.data["first_name"],
                          AuthUser.objects.get(username=self.user_1.username).first_name)
 
     def test_create_api(self):
@@ -105,5 +105,18 @@ class ModelsTestCase(TestCase):
         response = self.client.patch(reverse('user-detail', kwargs={"username": self.user_1.username}), data=data,
                                      format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["first_name"], data["fist_name"])
-        self.assertIsNotNone(AuthUser.objects.filter(first_name=data["first_name"]).exists())
+        self.assertEqual(response.data["first_name"], data.get("first_name"))
+        self.assertIsNotNone(AuthUser.objects.filter(first_name=data.get("first_name")).exists())
+
+    def test_soft_delete_api(self):
+        response = self.client.delete(reverse('user-detail', kwargs={"username": self.user_1.username}))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertTrue(AuthUser.objects.filter(username=self.user_1.username).exists())
+        self.assertTrue(AuthUser.objects.filter(username=self.user_1.username).first().is_deleted)
+
+    def test_restore_user(self):
+        response = self.client.delete(reverse('user-detail', kwargs={"username": self.user_1.username}))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        deleted_user = AuthUser.objects.get(username=self.user_1.username)
+        deleted_user.restore()
+        self.assertFalse(AuthUser.objects.filter(username=self.user_1.username).first().is_deleted)

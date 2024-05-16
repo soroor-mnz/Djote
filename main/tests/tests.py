@@ -2,10 +2,6 @@ import datetime
 
 from django.test import TestCase
 from rest_framework.test import APIClient
-
-# Create your tests here.
-from sqlalchemy.sql.functions import now
-
 from Djote.utils.view_utils import now
 from main.models import Note
 from main.tests.factories import NoteFactory
@@ -14,7 +10,7 @@ from django.urls import reverse
 from rest_framework import status
 
 
-class ModelsTestCase(TestCase):
+class NoteTestCase(TestCase):
     def setUp(self) -> None:
         self.user_1 = UserFactory()
         self.user_2 = UserFactory()
@@ -26,6 +22,14 @@ class ModelsTestCase(TestCase):
 
         self.client = APIClient()
         self.client.force_authenticate(user=self.user_1)
+
+    def test_note_creation(self):
+        self.assertEqual(self.note_1.title, 'blue')
+        self.assertEqual(self.note_1.content, 'note number 1')
+        self.assertEqual(self.note_1.user, self.user_1)
+
+    def test_note_str(self):
+        self.assertEqual(str(self.note_1), 'blue')
 
     def test_list_api(self):
         response = self.client.get(reverse('note-list'))
@@ -50,14 +54,16 @@ class ModelsTestCase(TestCase):
     def test_list_filter_date(self):
         start_date = datetime.datetime.now() - datetime.timedelta(days=2)
         end_date = datetime.datetime.now()
-        response = self.client.get(reverse("note-list") + "?created_at_before=" + str(end_date) + "&created_at_after=" + str(start_date))
+        response = self.client.get(
+            reverse("note-list") + "?created_at_before=" + str(end_date) + "&created_at_after=" + str(start_date))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data.get("count"), Note.objects.filter(created_at__range=(start_date, end_date)).count())
+        self.assertEqual(response.data.get("count"),
+                         Note.objects.filter(created_at__range=(start_date, end_date)).count())
 
     def test_retrieve_api(self):
         response = self.client.get(reverse('note-detail', kwargs={"pk": self.note_1.id}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data.get("results")["title"],Note.objects.get(id=self.note_1.id).title)
+        self.assertEqual(response.data["title"], Note.objects.get(id=self.note_1.id).title)
 
     def test_create_api(self):
         data = {
@@ -81,7 +87,7 @@ class ModelsTestCase(TestCase):
 
     def test_update_api_invalid_user(self):
         data = {
-            "title" : "new title"
+            "title": "new title"
         }
         response = self.client.patch(reverse('note-detail', kwargs={"pk": self.note_3.id}), data=data,
                                      format="json")
