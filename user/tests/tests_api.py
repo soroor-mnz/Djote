@@ -71,7 +71,7 @@ class ModelsTestCase(TestCase):
     def test_retrieve_api(self):
         response = self.client.get(reverse('user-detail', kwargs={"username": self.user_1.username}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data.get("results")["first_name"],
+        self.assertEqual(response.data["first_name"],
                          AuthUser.objects.get(username=self.user_1.username).first_name)
 
     def test_create_api(self):
@@ -105,5 +105,5 @@ class ModelsTestCase(TestCase):
         response = self.client.patch(reverse('user-detail', kwargs={"username": self.user_1.username}), data=data,
                                      format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data["first_name"], data["fist_name"])
-        self.assertIsNotNone(AuthUser.objects.filter(first_name=data["first_name"]).exists())
+        self.assertEqual(response.data["first_name"], data.get("first_name"))
+        self.assertIsNotNone(AuthUser.objects.filter(first_name=data.get("first_name")).exists())

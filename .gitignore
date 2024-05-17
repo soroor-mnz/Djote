@@ -1,5 +1,7 @@
+.pytest_cache/
 /local_settings.py
 .idea
 venv
 db.sqlite3
 .coverage
+.idea/
