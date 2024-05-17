@@ -19,6 +19,7 @@ db.sqlite3
 *.sublime-project
 *.sublime-workspace
 
+.pytest_cache/
 /local_settings.py
 .idea
 venv
