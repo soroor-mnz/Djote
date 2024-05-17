@@ -1,0 +1,20 @@
+from datetime import timedelta
+
+from Djote import settings
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "name_db",
+        "USER": "db_user",
+        "PASSWORD": "db_password",
+        "HOST": "localhost",
+        "default-character-set": "utf8",
+    }
+}
+
+settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'] = timedelta(weeks=500)
+settings.SIMPLE_JWT['REFRESH_TOKEN_LIFETIME'] = timedelta(weeks=500)
+
+
+DEBUG = True
