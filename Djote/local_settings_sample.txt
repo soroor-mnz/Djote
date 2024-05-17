@@ -8,7 +8,7 @@ DATABASES = {
         "NAME": "name_db",
         "USER": "db_user",
         "PASSWORD": "db_password",
-        "HOST": "localhost",
+        "HOST": "db",
         "default-character-set": "utf8",
     }
 }

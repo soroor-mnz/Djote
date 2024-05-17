@@ -33,3 +33,42 @@ Install Black, to follow the project standard format.
 And run this command before each commit: 
 	
 	black ./lm
+
+# Docker Settings
+
+Before you begin, ensure you have the following installed on your machine:
+
+- Docker
+- Docker Compose
+
+Make Sure you have the local_setting file on the main root directory of your project with your credentials and the Host value is db:
+    
+    "HOST": "db"
+
+Now you can build the Docker images and start the containers:
+
+    docker-compose up --build
+
+Apply the Django migrations:
+ 
+    docker-compose exec web python manage.py migrate
+
+Create a superuser
+    
+    docker-compose exec web python manage.py createsuperuser
+
+Your Django project is now up on docker 
+
+# Docker Commands
+
+Building the Docker Images
+
+    docker-compose build
+
+Starting the Containers
+
+    docker-compose up
+
+Stopping the Containers
+
+    docker-compose down
