@@ -25,6 +25,20 @@ to test only one app:
     python manage.py test app_name 
 
 
+# Coverage
+make sure you installed the requirements.txt file. If not, run the following command :
+
+    pip install coverage
+
+Now run test coverage :
+
+    coverage run manage.py test
+
+to see the results run :
+
+    coverage report
+
+
 # Code Formatter
 Install Black, to follow the project standard format. 
 
