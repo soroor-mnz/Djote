@@ -2,6 +2,7 @@ import datetime
 
 from django.test import TestCase
 from rest_framework.test import APIClient
+
 from Djote.utils.view_utils import now
 from main.models import Note
 from main.tests.factories import NoteFactory
