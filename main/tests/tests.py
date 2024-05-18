@@ -1,5 +1,6 @@
 import datetime
 
+import factory
 from django.test import TestCase
 from rest_framework.test import APIClient
 
@@ -13,8 +14,10 @@ from rest_framework import status
 
 class NoteTestCase(TestCase):
     def setUp(self) -> None:
-        self.user_1 = UserFactory()
-        self.user_2 = UserFactory()
+        self.user_1 = UserFactory(username=factory.Faker("user_name"), email=factory.Faker("email"),
+                                  first_name=factory.Faker("first_name"), last_name=factory.Faker("last_name"))
+        self.user_2 = UserFactory(username=factory.Faker("user_name"), email=factory.Faker("email"),
+                                  first_name=factory.Faker("first_name"), last_name=factory.Faker("last_name"))
 
         self.note_1 = NoteFactory(user=self.user_1, title='blue', content="note number 1",
                                   created_at=now() - datetime.timedelta(days=7))

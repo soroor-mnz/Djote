@@ -1,4 +1,6 @@
 import datetime
+
+import factory
 from django.test import TestCase
 
 from Djote.utils.view_utils import now
@@ -12,9 +14,14 @@ from rest_framework import status
 
 class ModelsTestCase(TestCase):
     def setUp(self) -> None:
-        self.user_1 = UserFactory(date_joined=now() - datetime.timedelta(days=7))
-        self.user_2 = UserFactory()
-        self.user_3 = UserFactory()
+        self.user_1 = UserFactory(username=factory.Faker("user_name"), email=factory.Faker("email"),
+                                  first_name=factory.Faker("first_name"), last_name=factory.Faker("last_name"),
+                                  date_joined=now() - datetime.timedelta(days=7))
+
+        self.user_2 = UserFactory(username=factory.Faker("user_name"), email=factory.Faker("email"),
+                                  first_name=factory.Faker("first_name"), last_name=factory.Faker("last_name"))
+        self.user_3 = UserFactory(username=factory.Faker("user_name"), email=factory.Faker("email"),
+                                  first_name=factory.Faker("first_name"), last_name=factory.Faker("last_name"))
         self.user_4 = UserFactory(is_deleted=True)
         self.client = APIClient()
         self.client.force_authenticate(user=self.user_1)
