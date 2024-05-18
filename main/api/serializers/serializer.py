@@ -18,8 +18,8 @@ class NoteReadSerializer(serializers.ModelSerializer):
 
 
 class NoteWriteSerializer(serializers.ModelSerializer):
-    title = serializers.CharField(required=True, allow_null=True, allow_blank=True)
-    content = serializers.CharField(required=True, allow_null=True, allow_blank=True)
+    title = serializers.CharField(required=True, allow_null=False, allow_blank=False)
+    content = serializers.CharField(required=True, allow_null=False, allow_blank=False)
 
     class Meta:
         model = Note
